@@ -1,0 +1,33 @@
+html, body {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	font-family: 'Open Sans', sans-serif;
+}
+
+body {
+	margin: 0;
+}
+
+
+
+input, button, select, textarea {
+	font-family: inherit;
+	font-size: inherit;
+	padding: 0.4em;
+	margin: 0 0 0.5em 0;
+}
+
+input {
+	color: black;
+}
+
+.feather {
+	width: 24px;
+	height: 24px;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	fill: none;
+  }
