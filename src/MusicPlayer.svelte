@@ -2,12 +2,11 @@
 <script>
     import axios from 'axios';
     import { afterUpdate, onMount } from 'svelte';
-    import settings from './settings';
     
     export let query;
     export let onLoad; 
 
-    const { SPOTIFY_CLIENT_ID } = settings;
+    const { SPOTIFY_CLIENT_ID } = process.env;
     const BASE_SPOTIFY_URL='https://api.spotify.com'
     const ENDED_SONG_MS = 700;
     const SEARCH_LIMIT= 50;

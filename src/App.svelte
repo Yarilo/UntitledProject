@@ -3,9 +3,8 @@
 	import axios from 'axios';
 	import Background from './Background.svelte';
 	import MusicPlayer from './MusicPlayer.svelte';
-	import settings from './settings';
 
-	const { UNSPLASH_ACCESS_KEY } = settings;
+	const { UNSPLASH_ACCESS_KEY } = process.env;
 	const DELAY_TIME_MS = 600;
 	const BASE_UNSPLASH_URL =  'https://api.unsplash.com/';
 	

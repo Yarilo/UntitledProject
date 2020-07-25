@@ -4,9 +4,9 @@
 On a search term, enjoy related audiovisual content.
 
 
-# Setup 
+# Setup
  
- 0. Prerequisites 
+ 0. Prerequisites
 
     A client ID from [Spotify](https://developer.spotify.com/) and access token from [Unsplash](https://unsplash.com/developers) are needed.
     Once you have them, write them in `src/settings.js` file.
