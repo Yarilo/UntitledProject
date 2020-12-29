@@ -61,7 +61,7 @@
 			{/if }
 			<input on:input={updateQueryAndChangeBackground}>
 			{#if query} 
-				<Icon onClick={() => fetchPhoto(query)} name='refresh-cw' />
+				<Icon onClick={() => fetchPhoto(query)} size={'small'} name='refresh-cw' />
 			{/if}
 		</div>
 		{#await fetchPromise}
@@ -148,5 +148,4 @@
 		border: none;
 		border-bottom: 1px solid black;
 	}
-
 </style>
