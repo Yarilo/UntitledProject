@@ -140,6 +140,7 @@
                                 <Icon onClick={pause} name='pause'/>
                             {/if}
                                 <Icon onClick={next} name='skip-forward'/>
+                                <Icon onClick={next} name='reload'/>
                         </div>
                         <p>{songInfo}</p>
                     </div>

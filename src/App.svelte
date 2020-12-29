@@ -20,6 +20,10 @@
 	let photoLink;
 	let isPlayerLoaded = false;
 
+	$: { 
+		fetchPromise = fetchPhoto(query);
+	}
+
 	onMount(() => {
         request = axios.create({ 
 			baseURL: BASE_UNSPLASH_URL,
@@ -41,14 +45,17 @@
 		
 	} 
 	
-	async function updateQueryAndChangeBackground (event = { target: {}}) {
+	async function updateQuery (event = {target:{}}) {
 		clearTimeout(timeout);
 		timeout = setTimeout(() => {
-			query = event.target.value;
-			if (query && query.length < 3) return;
-			fetchPromise = fetchPhoto(query);
+			const newQuery = event.target.value;
+			if (newQuery && newQuery.length < 3) return;
+			query = newQuery;
 		}, DELAY_TIME_MS)
+	}
 	
+	async function reloadPhoto () {
+		fetchPromise = fetchPhoto(query)
 	}
 
 </script>
@@ -59,9 +66,9 @@
 			{#if !src} 
 			<h1>Type something</h1>
 			{/if }
-			<input on:input={updateQueryAndChangeBackground}>
+			<input on:input={updateQuery}>
 			{#if query} 
-				<Icon onClick={() => fetchPhoto(query)} size={'small'} name='refresh-cw' />
+				<Icon onClick={reloadPhoto} size={'small'} name='refresh-cw' />
 			{/if}
 		</div>
 		{#await fetchPromise}
