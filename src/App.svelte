@@ -3,6 +3,7 @@
 	import axios from 'axios';
 	import Background from './Background.svelte';
 	import MusicPlayer from './MusicPlayer.svelte';
+	import Icon from './Icon.svelte';
 
 	const { UNSPLASH_ACCESS_KEY } = process.env;
 	const DELAY_TIME_MS = 600;
@@ -40,7 +41,7 @@
 		
 	} 
 	
-	async function changeBackground (event = { target: {}}) {
+	async function updateQueryAndChangeBackground (event = { target: {}}) {
 		clearTimeout(timeout);
 		timeout = setTimeout(() => {
 			query = event.target.value;
@@ -58,7 +59,10 @@
 			{#if !src} 
 			<h1>Type something</h1>
 			{/if }
-			<input on:input={changeBackground}>
+			<input on:input={updateQueryAndChangeBackground}>
+			{#if query} 
+				<Icon onClick={() => fetchPhoto(query)} name='refresh-cw' />
+			{/if}
 		</div>
 		{#await fetchPromise}
 			<p>Fetching...</p>
@@ -84,10 +88,6 @@
      :global(body .white-text input) {       
 			 color: white;
 			 border-bottom: 1px solid white !important;
-     } 
- 
-     :global(body .white-text .feather) {    
-             color: white;
      } 
 
  	 :global(body .white-text p) {    

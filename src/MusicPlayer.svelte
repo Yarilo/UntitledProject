@@ -154,7 +154,6 @@
     }
     .main-controls {
         display:flex;
-        cursor: pointer;
     }
     .controls {
         display: flex;
