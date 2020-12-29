@@ -1,8 +1,9 @@
 
 <script>
     import axios from 'axios';
-    import { afterUpdate, onMount } from 'svelte';
-    
+    import { onMount } from 'svelte';
+    import Icon from './Icon.svelte';
+
     export let query;
     export let onLoad; 
 
@@ -134,17 +135,11 @@
                     <div class="controls">
                         <div class="main-controls">
                             {#if paused}
-                                <svg class="feather" on:click={resume}>
-                                    <use xlink:href="feather-sprite.svg#play"/>
-                                </svg>
+                                <Icon onClick={resume} name='play'/>
                             {:else }
-                                <svg class="feather" on:click={pause}>
-                                    <use xlink:href="feather-sprite.svg#pause"/>
-                                </svg>
+                                <Icon onClick={pause} name='pause'/>
                             {/if}
-                            <svg class="feather" on:click={next}>
-                                    <use xlink:href="feather-sprite.svg#skip-forward"/>
-                            </svg>
+                                <Icon onClick={next} name='skip-forward'/>
                         </div>
                         <p>{songInfo}</p>
                     </div>
