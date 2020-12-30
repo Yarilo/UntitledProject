@@ -42,7 +42,6 @@
 		photographerLink = user.links.html;
 		photoLink = links.html;
 		return src;
-		
 	} 
 	
 	async function updateQuery (event = {target:{}}) {
@@ -67,9 +66,6 @@
 			<h1>Type something</h1>
 			{/if }
 			<input on:input={updateQuery}>
-			{#if query} 
-				<Icon onClick={reloadPhoto} size={'small'} name='refresh-cw' />
-			{/if}
 		</div>
 		{#await fetchPromise}
 			<p>Fetching...</p>
@@ -80,6 +76,9 @@
 			<div class='credits'>
 				<a href={photoLink} class="by" target='_blank'>by</a> 
 				<a href={photographerLink} target='_blank'>{photographer}</a> 
+				<div class='reload-photo'>
+					<Icon onClick={reloadPhoto} size={'small'} name='refresh-cw' />
+				</div>
 			</div>
 		{/if}
 	{/if}
@@ -122,7 +121,6 @@
 		left: 0;
 		margin: 20px;
 		display: flex;
-		
 	}
 	.credits .by {
 			margin-right: 5px;
@@ -132,6 +130,12 @@
 		color: inherit;
 		text-decoration: none;
 	}
+
+	.credits .reload-photo {
+		margin-top: 2.5px;
+		margin-left: 10px;
+	}
+
 
 	.music-player {
 		position: absolute;
