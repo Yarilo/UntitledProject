@@ -122,9 +122,17 @@
         songInfo = `${songName} by ${artists}`;
     }
 
+    function handleKeydown (event) {
+		let key = event.key;
+        let keyCode = event.keyCode;
+        console.log('key', key);
+        console.log('KEYCODE', keyCode);
+    }
     
   
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <main>
             { #if !spotifyAccessToken }
