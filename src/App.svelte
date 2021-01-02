@@ -38,10 +38,10 @@
 
 </script>
 
-<main class={src ? 'white-text': ''}>
+<main class={isPlayerLoaded ? 'white-text': ''}>
 	{#if isPlayerLoaded} 
 		<div id='keyword'>
-			{#if !src} 
+			{#if !isPlayerLoaded} 
 			<h1>Type something</h1>
 			{/if }
 			<input on:input={updateQuery}>
@@ -69,6 +69,10 @@
  	 :global(body .white-text p) {    
              color: white;
      } 
+
+    :global(body .white-text .credits) {    
+		color: white;
+    } 
 
 
 	main {

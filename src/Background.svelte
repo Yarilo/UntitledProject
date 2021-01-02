@@ -51,10 +51,7 @@
 </main>
 
 <style>
-       :global(.credits) {    
-		color: white;
-	
-       } 
+
 
        .credits {
 		position: absolute;
