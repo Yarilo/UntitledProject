@@ -17,6 +17,8 @@
     const scopes = encodeURIComponent('user-modify-playback-state streaming user-read-currently-playing');
     let spotifyUrl = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&redirect_uri=http://localhost:5000&response_type=token&state=123&scope=${scopes}`;
     
+    const SPACE = 32;
+
     let spotifyAccessToken;
     let player; 
     let songInfo = '';
@@ -123,10 +125,9 @@
     }
 
     function handleKeydown (event) {
-		let key = event.key;
-        let keyCode = event.keyCode;
-        console.log('key', key);
-        console.log('KEYCODE', keyCode);
+        if (event.keyCode === SPACE) {
+            paused ? resume() : pause();
+        }
     }
     
   
