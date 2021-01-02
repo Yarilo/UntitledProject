@@ -15,7 +15,7 @@
 
 	let query;
 	let isPlayerLoaded = false;
-
+	let isImageLoaded = false;
 
 	onMount(() => {
         request = axios.create({ 
@@ -25,7 +25,8 @@
 	}); 
 
 	const onPlayerLoad = () => isPlayerLoaded = true;
- 
+	const onImageLoad = () => isImageLoaded =true;
+
 	async function updateQuery (event = {target:{}}) {
 		clearTimeout(timeout);
 		timeout = setTimeout(() => {
@@ -38,10 +39,10 @@
 
 </script>
 
-<main class={isPlayerLoaded ? 'white-text': ''}>
+<main class={isImageLoaded ? 'white-text': ''}>
 	{#if isPlayerLoaded} 
 		<div id='keyword'>
-			{#if !isPlayerLoaded} 
+			{#if !isImageLoaded} 
 			<h1>Type something</h1>
 			{/if }
 			<input on:input={updateQuery}>
@@ -55,7 +56,7 @@
 	<div class={isPlayerLoaded ? 'music-player': 'music-player not-logged'}>
 		<MusicPlayer {query} onLoad={onPlayerLoad} />
 	</div>
-	<Background request={request} {query}/>
+	<Background request={request} {query} onLoad={onImageLoad} />
 </main>
 
 <style>
@@ -69,10 +70,10 @@
  	 :global(body .white-text p) {    
              color: white;
      } 
-
-    :global(body .white-text .credits) {    
-		color: white;
-    } 
+	
+	:global(body .white-text .credits) {    
+             color: white;
+     } 
 
 
 	main {

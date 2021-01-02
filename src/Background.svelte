@@ -2,6 +2,7 @@
        import Icon from './Icon.svelte';
        export let query;
        export let request;
+       export let onLoad; 
 
 	let photographer;
 	let photographerLink;
@@ -26,6 +27,7 @@
               let pic = new Image(); 
               pic.onload = function() {
                      document.querySelector('#image').style.backgroundImage = 'url(' + imageUrl + ')';
+                     onLoad();
                      return new Promise().resolve();
               }
               pic.src = imageUrl;
