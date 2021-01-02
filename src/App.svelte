@@ -3,7 +3,6 @@
 	import axios from 'axios';
 	import Background from './Background.svelte';
 	import MusicPlayer from './MusicPlayer.svelte';
-	import Icon from './Icon.svelte';
 
 	const { UNSPLASH_ACCESS_KEY } = process.env;
 	const DELAY_TIME_MS = 600;
@@ -15,14 +14,8 @@
 	let fetchPromise;
 
 	let query;
-	let photographer;
-	let photographerLink;
-	let photoLink;
 	let isPlayerLoaded = false;
 
-	$: { 
-		fetchPromise = fetchPhoto(query);
-	}
 
 	onMount(() => {
         request = axios.create({ 
@@ -32,18 +25,7 @@
 	}); 
 
 	const onPlayerLoad = () => isPlayerLoaded = true;
-
-	async function fetchPhoto (query)  {
-		if (!query) return;
-		const response = await request.get(`/photos/random/?query=${query}&orientation=landscape&featured=true`);
-		const {urls, user, links} = response.data;
-		src = `${urls.raw}?auto=format&q=10` //  https://docs.imgix.com/apis/rendering/format/q
-		photographer = user.name;
-		photographerLink = user.links.html;
-		photoLink = links.html;
-		return src;
-	} 
-	
+ 
 	async function updateQuery (event = {target:{}}) {
 		clearTimeout(timeout);
 		timeout = setTimeout(() => {
@@ -52,10 +34,7 @@
 			query = newQuery;
 		}, DELAY_TIME_MS)
 	}
-	
-	async function reloadPhoto () {
-		fetchPromise = fetchPhoto(query)
-	}
+
 
 </script>
 
@@ -72,20 +51,11 @@
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
-		{#if photographerLink}
-			<div class='credits'>
-				<a href={photoLink} class="by" target='_blank'>by</a> 
-				<a href={photographerLink} target='_blank'>{photographer}</a> 
-				<div class='reload-photo'>
-					<Icon onClick={reloadPhoto} size={'small'} name='refresh-cw' />
-				</div>
-			</div>
-		{/if}
 	{/if}
 	<div class={isPlayerLoaded ? 'music-player': 'music-player not-logged'}>
 		<MusicPlayer {query} onLoad={onPlayerLoad} />
 	</div>
-	<Background {src}/>
+	<Background request={request} {query}/>
 </main>
 
 <style>
@@ -99,10 +69,6 @@
  	 :global(body .white-text p) {    
              color: white;
      } 
-	
-	:global(body .white-text .credits) {    
-				color: white;
-	} 
 
 
 	main {
@@ -114,28 +80,6 @@
 		min-height: 100%;
        	min-width: 100%;
 	}
-
-	.credits {
-		position: absolute;
-		bottom: 0px;
-		left: 0;
-		margin: 20px;
-		display: flex;
-	}
-	.credits .by {
-			margin-right: 5px;
-	}
-
-	.credits a {
-		color: inherit;
-		text-decoration: none;
-	}
-
-	.credits .reload-photo {
-		margin-top: 2.5px;
-		margin-left: 10px;
-	}
-
 
 	.music-player {
 		position: absolute;
