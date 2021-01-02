@@ -136,8 +136,8 @@
 
 <main>
             { #if !spotifyAccessToken }
-                <p>Welcome.</p>
-                <a href={spotifyUrl}>Click to log in to spotify</a>
+                <h1>Welcome</h1>
+                <a href={spotifyUrl}>Log in Spotify to begin.</a>
             { :else }
                 {#if isPlaying}
                     <div class="controls">
