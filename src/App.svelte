@@ -37,7 +37,7 @@
 		if (!query) return;
 		const response = await request.get(`/photos/random/?query=${query}&orientation=landscape&featured=true`);
 		const {urls, user, links} = response.data;
-		src = `${urls.raw}?auto=format`
+		src = `${urls.raw}?auto=format&q=10` //  https://docs.imgix.com/apis/rendering/format/q
 		photographer = user.name;
 		photographerLink = user.links.html;
 		photoLink = links.html;

@@ -1,15 +1,19 @@
 <script>
-       import { beforeUpdate } from 'svelte';
        export let src;
 
 
-    beforeUpdate(async () => {
-      let pic = new Image(); 
-      pic.onload = function() {
-              document.querySelector('#image').style.backgroundImage = 'url(' + src + ')';
-      }
-       pic.src = src;
-    })
+       $: {
+              loadImage(src);
+       }
+
+       function loadImage(imageUrl) {
+              let pic = new Image(); 
+              pic.onload = function() {
+                     document.querySelector('#image').style.backgroundImage = 'url(' + imageUrl + ')';
+              }
+              pic.src = imageUrl;
+       }
+  
 </script>
 
 <main>
