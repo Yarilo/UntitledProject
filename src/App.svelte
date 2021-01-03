@@ -9,7 +9,6 @@
 	const BASE_UNSPLASH_URL =  'https://api.unsplash.com/';
 	
 	let request;
-	let src;
 	let timeout;
 	let fetchPromise;
 

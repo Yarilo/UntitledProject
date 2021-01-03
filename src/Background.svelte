@@ -20,17 +20,19 @@
 		photographer = user.name;
 		photographerLink = user.links.html;
 		photoLink = links.html;
-		await loadImage(src)
+              await loadImage(src)
+              onLoad();
        }
        
        function loadImage(imageUrl) {
-              let pic = new Image(); 
-              pic.onload = function() {
-                     document.querySelector('#image').style.backgroundImage = 'url(' + imageUrl + ')';
-                     onLoad();
-                     return new Promise().resolve();
-              }
-              pic.src = imageUrl;
+              return new Promise((resolve, reject) => {
+                     let pic = new Image(); 
+                     pic.onload = function() {
+                            document.querySelector('#image').style.backgroundImage = 'url(' + imageUrl + ')';
+                            resolve();
+                     }
+                     pic.src = imageUrl;
+              })
        }
   
        async function reloadPhoto () {
