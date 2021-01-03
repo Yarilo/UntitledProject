@@ -10,7 +10,7 @@
 	let query;
 	let isPlayerLoaded = false;
 	let isImageLoaded = false;
-; 
+	
 
 	const onPlayerLoad = () => isPlayerLoaded = true;
 	const onImageLoad = () => isImageLoaded =true;
@@ -35,11 +35,7 @@
 			{/if }
 			<input on:input={updateQuery}>
 		</div>
-		{#await fetchPromise}
-			<p>Fetching...</p>
-		{:catch error}
-			<p style="color: red">{error.message}</p>
-		{/await}
+	
 	{/if}
 	<div class={isPlayerLoaded ? 'music-player': 'music-player not-logged'}>
 		<MusicPlayer {query} onLoad={onPlayerLoad} />
@@ -55,13 +51,10 @@
 			 border-bottom: 1px solid white !important;
      } 
 
- 	 :global(body .white-text p) {    
+ 	 :global(body .white-text *) {    
              color: white;
      } 
 	
-	:global(body .white-text .credits) {    
-             color: white;
-     } 
 
 
 	main {

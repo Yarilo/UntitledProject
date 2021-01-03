@@ -4,8 +4,7 @@
        import Icon from './Icon.svelte';
        
        export let query;
-       export let onLoad; 
-       export let fetchPromise;
+       export let onLoad;
 
 	let photographer;
 	let photographerLink;
@@ -25,7 +24,7 @@
 
 
        $: {
-           if(query) fetchPromise = loadPhoto(query);
+           if(query) loadPhoto(query);
        }
 
        
