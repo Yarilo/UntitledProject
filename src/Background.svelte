@@ -1,18 +1,34 @@
-<script>
+<script>     
+       import { onMount } from 'svelte';
+	import axios from 'axios';
        import Icon from './Icon.svelte';
+       
        export let query;
-       export let request;
        export let onLoad; 
+       export let fetchPromise;
 
 	let photographer;
 	let photographerLink;
 	let photoLink;
+       let request;
+       
+       const { UNSPLASH_ACCESS_KEY } = process.env;
+	const BASE_UNSPLASH_URL =  'https://api.unsplash.com/';
+
+
+	onMount(() => {
+        request = axios.create({ 
+			baseURL: BASE_UNSPLASH_URL,
+			headers: { Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}` }
+		});
+       })
+
 
        $: {
-           if(query) loadPhoto(query);
+           if(query) fetchPromise = loadPhoto(query);
        }
 
-
+       
        async function loadPhoto (query)  {
 		const response = await request.get(`/photos/random/?query=${query}&orientation=landscape&featured=true`);
 		const {urls, user, links} = response.data;

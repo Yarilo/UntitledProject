@@ -1,27 +1,16 @@
 <script>
-    import { onMount } from 'svelte';
-	import axios from 'axios';
 	import Background from './Background.svelte';
 	import MusicPlayer from './MusicPlayer.svelte';
 
-	const { UNSPLASH_ACCESS_KEY } = process.env;
 	const DELAY_TIME_MS = 600;
-	const BASE_UNSPLASH_URL =  'https://api.unsplash.com/';
 	
-	let request;
 	let timeout;
 	let fetchPromise;
 
 	let query;
 	let isPlayerLoaded = false;
 	let isImageLoaded = false;
-
-	onMount(() => {
-        request = axios.create({ 
-			baseURL: BASE_UNSPLASH_URL,
-			headers: { Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}` }
-		});
-	}); 
+; 
 
 	const onPlayerLoad = () => isPlayerLoaded = true;
 	const onImageLoad = () => isImageLoaded =true;
@@ -55,7 +44,7 @@
 	<div class={isPlayerLoaded ? 'music-player': 'music-player not-logged'}>
 		<MusicPlayer {query} onLoad={onPlayerLoad} />
 	</div>
-	<Background request={request} {query} onLoad={onImageLoad} />
+	<Background {fetchPromise} {query} onLoad={onImageLoad} />
 </main>
 
 <style>
