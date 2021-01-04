@@ -71,32 +71,30 @@
 </main>
 
 <style>
-
-
        .credits {
-		position: absolute;
-		bottom: 0px;
-		left: 0;
-		margin: 20px;
-		display: flex;
-	}
-	
+              position: absolute;
+              bottom: 0px;
+              left: 0;
+              margin: 20px;
+              display: flex;
+       }
+
        .credits .by {
-			margin-right: 5px;
-	}
+              margin-right: 5px;
+       }
 
-	.credits a {
-		color: inherit;
-		text-decoration: none;
-	}
+       .credits a {
+              color: inherit;
+              text-decoration: none;
+       }
 
-	.credits .reload-photo {
-		margin-top: 2.5px;
-		margin-left: 10px;
-	}
+       .credits .reload-photo {
+              margin-top: 2.5px;
+              margin-left: 10px;
+       }
 
        #image {
-              position:fixed;
+              position: fixed;
               top: 0;
               left: 0;
               z-index: -1000;
@@ -107,6 +105,5 @@
               min-height: 100%;
               min-width: 100%;
        }
-
 </style>
 

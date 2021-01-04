@@ -134,31 +134,30 @@
         }
     }
     
-  
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
 <main>
-            { #if !spotifyAccessToken }
-                <h1>Welcome</h1>
-                <a href={spotifyUrl}>Log in Spotify to begin.</a>
-            { :else }
-                {#if isPlaying}
-                    <div class="controls">
-                        <div class="main-controls">
-                            {#if paused}
-                                <Icon onClick={resume} name='play'/>
-                            {:else }
-                                <Icon onClick={pause} name='pause'/>
-                            {/if}
-                                <Icon onClick={next} name='skip-forward'/>
-                                <Icon onClick={next} name='reload'/>
-                        </div>
-                        <p>{songInfo}</p>
-                    </div>
-                {/if}
-            { /if }
+    { #if !spotifyAccessToken }
+        <h1>Welcome</h1>
+        <a href={spotifyUrl}>Log in Spotify to begin.</a>
+    { :else }
+        {#if isPlaying}
+            <div class="controls">
+                <div class="main-controls">
+                    {#if paused}
+                        <Icon onClick={resume} name='play'/>
+                    {:else }
+                        <Icon onClick={pause} name='pause'/>
+                    {/if}
+                        <Icon onClick={next} name='skip-forward'/>
+                        <Icon onClick={next} name='reload'/>
+                </div>
+                <p>{songInfo}</p>
+            </div>
+        {/if}
+    { /if }
 </main>
 
 <style>
@@ -175,7 +174,6 @@
         align-items: center;
         color: black;
     }
-
 </style>
 
 <svelte:head>

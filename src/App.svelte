@@ -50,8 +50,6 @@
 </main>
 
 <style>
-
-
      :global(body .white-text input) {       
 			 color: white;
 			 border-bottom: 1px solid white !important;
