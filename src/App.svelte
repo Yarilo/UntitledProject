@@ -63,8 +63,6 @@
              color: white;
      } 
 	
-
-
 	main {
 		text-align: center;
 		display: flex;
