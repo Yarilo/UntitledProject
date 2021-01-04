@@ -9,13 +9,11 @@
 	let query;
 	let isPlayerInitialized = false;
 	let isImageLoaded = false;
-	let playerError = '';
-	let imageError = '';
-
 	let loadingPromise;
 
 	const onPlayerInit = () => isPlayerInitialized = true;
 	const onImageLoad = () => isImageLoaded = true;
+	const onImageLoading = (promise) => loadingPromise = promise;
 
 	const onPlayerError = (error) => playerError = error;
 	const onImageError = (error) => imageError = error;
@@ -27,22 +25,6 @@
 			if (newQuery && newQuery.length < 3) return;
 			query = newQuery;
 		}, DELAY_TIME_MS)
-	}
-
-	function getLoadingPromise (isImageLoaded, playerError, imageError) {
-		return new Promise((resolve, reject)=> {
-			if (isImageLoaded) {
-					return resolve();
-				}
-			if (playerError) return reject(playerError);
-			if (imageError) return reject (imageError);
-		})
-	}
-
-	$: {
-		if (query) {
-			loadingPromise = getLoadingPromise(isImageLoaded, playerError, imageError)
-		}	
 	}
 
 
@@ -66,7 +48,7 @@
 	<div class={isPlayerInitialized ? 'music-player': 'music-player not-logged'}>
 		<MusicPlayer {query} onInitialization={onPlayerInit} onError={onPlayerError} />
 	</div>
-	<Background {query} onLoad={onImageLoad} onError={onImageError} />
+	<Background {query} onLoading={onImageLoading} onLoad={onImageLoad} onError={onImageError} />
 </main>
 
 <style>

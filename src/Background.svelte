@@ -5,7 +5,7 @@
        
        export let query;
        export let onLoad;
-       export let onError;
+       export let onLoading;
 
 	let photographer;
 	let photographerLink;
@@ -25,24 +25,19 @@
 
 
        $: {
-           if(query) loadPhoto(query);
+           if(query) onLoading(loadPhoto(query));
        }
 
        
        async function loadPhoto (query)  {
-              try {
-                     const response = await request.get(`/photos/random/?query=${query}&orientation=landscape&featured=true`);
-                     const {urls, user, links} = response.data;
-                     const src = `${urls.raw}?auto=format&q=10` //  https://docs.imgix.com/apis/rendering/format/q
-                     photographer = user.name;
-                     photographerLink = user.links.html;
-                     photoLink = links.html;
-                     await loadImage(src)
-                     onLoad();
-              } catch(error) {
-                     onError(error);
-              }
-		
+              const response = await request.get(`/photos/random/?query=${query}&orientation=landscape&featured=true`);
+              const {urls, user, links} = response.data;
+              const src = `${urls.raw}?auto=format&q=10` //  https://docs.imgix.com/apis/rendering/format/q
+              photographer = user.name;
+              photographerLink = user.links.html;
+              photoLink = links.html;
+              await loadImage(src)
+              onLoad();
        }
        
        function loadImage(imageUrl) {
@@ -57,7 +52,7 @@
        }
   
        async function reloadPhoto () {
-	       await loadPhoto(query)
+	       onLoading(loadPhoto(query));
        }
        
 </script>
