@@ -32,7 +32,7 @@
        async function loadPhoto (query)  {
               const response = await request.get(`/photos/random/?query=${query}&orientation=landscape&featured=true`);
               const {urls, user, links} = response.data;
-              const src = `${urls.raw}?auto=format&q=10` //  https://docs.imgix.com/apis/rendering/format/q
+              const src = `${urls.raw}?auto=format&q=20` //  https://docs.imgix.com/apis/rendering/format/q
               photographer = user.name;
               photographerLink = user.links.html;
               photoLink = links.html;
