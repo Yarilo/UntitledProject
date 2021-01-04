@@ -23,13 +23,17 @@
 		}, DELAY_TIME_MS)
 	}
 
-	$: {
-		if (query) {
-			loadingPromise = new Promise((resolve, reject) => {
-				if (isImageLoaded && isPlayerLoaded) {
+	function getLoadingPromise (isImageLoaded, isPlayerLoaded) {
+		return new Promise((resolve, reject)=> {
+			if (isImageLoaded && isPlayerLoaded) {
 					return resolve();
 				}
-			});
+		})
+	}
+	
+	$: {
+		if (query) {
+			loadingPromise = getLoadingPromise(isImageLoaded, isImageLoaded)
 		}	
 	}
 
