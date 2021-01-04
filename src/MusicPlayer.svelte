@@ -142,6 +142,7 @@
     { #if !spotifyAccessToken }
         <h1>Welcome</h1>
         <a href={spotifyUrl}>Log in Spotify to begin.</a>
+        <p><small>(No data is stored, everything happens in your browser)</small></p>
     { :else }
         {#if isPlaying}
             <div class="controls">
