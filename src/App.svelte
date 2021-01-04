@@ -11,7 +11,7 @@
 	let isImageLoaded = false;
 	let playerError = '';
 	let imageError = '';
-	
+
 	let loadingPromise;
 
 	const onPlayerLoad = () => isPlayerLoaded = true;
@@ -56,7 +56,7 @@
 			{/if }
 			<input on:input={updateQuery}>
 			{#await loadingPromise}
-                <p>Fetching...</p>
+                <p>Loading...</p>
             {:catch error}
                 <p style="color: red">{error.message}</p>
             {/await}
