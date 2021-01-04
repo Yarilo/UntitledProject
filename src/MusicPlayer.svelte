@@ -1,10 +1,11 @@
 
 <script>
     import axios from 'axios';
-    import { afterUpdate, onMount } from 'svelte';
-    
+    import { onMount } from 'svelte';
+    import Icon from './Icon.svelte';
+
     export let query;
-    export let onLoad; 
+    export let onInitialization; 
 
     const { SPOTIFY_CLIENT_ID } = process.env;
     const BASE_SPOTIFY_URL='https://api.spotify.com'
@@ -16,6 +17,8 @@
     const scopes = encodeURIComponent('user-modify-playback-state streaming user-read-currently-playing');
     let spotifyUrl = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&redirect_uri=http://localhost:5000&response_type=token&state=123&scope=${scopes}`;
     
+    const SPACE = 32;
+
     let spotifyAccessToken;
     let player; 
     let songInfo = '';
@@ -27,6 +30,10 @@
         if (query) next();
     }
       
+    function onPlayerError ({message}) {
+        console.error(message)
+    } 
+
     const ENDPOINTS = {
         PLAY: () => `${BASE_SPOTIFY_URL}/v1/me/player/play?device_id=${player._options.id}`,
         SEARCH: (query) => `${BASE_SPOTIFY_URL}/v1/search?q=${encodeURIComponent(query)}&type=track&limit=${SEARCH_LIMIT}`
@@ -40,10 +47,10 @@
         });
 
         // Error handling
-        player.addListener('initialization_error', ({ message }) => { console.error(message); });
-        player.addListener('authentication_error', ({ message }) => { console.error(message); });
-        player.addListener('account_error', ({ message }) => { console.error(message); });
-        player.addListener('playback_error', ({ message }) => { console.error(message); });
+        player.addListener('initialization_error', (error) => { onPlayerError(error) });
+        player.addListener('authentication_error', (error) => { onPlayerError(error) });
+        player.addListener('account_error', (error) => { onPlayerError(error) });
+        player.addListener('playback_error', (error) => { onPlayerError(error) });
 
         // Playback status updates
         player.addListener('player_state_changed', state => {
@@ -58,7 +65,7 @@
         player.addListener('ready', ({ device_id }) => {
             console.log('Ready with Device ID', device_id);
             player.setVolume(VOLUME);
-            onLoad();
+            onInitialization();
         });
 
         // Not Ready
@@ -121,35 +128,36 @@
         songInfo = `${songName} by ${artists}`;
     }
 
+    function handleKeydown (event) {
+        if (event.keyCode === SPACE) {
+            paused ? resume() : pause();
+        }
+    }
     
-  
 </script>
 
+<svelte:window on:keydown={handleKeydown} />
+
 <main>
-            { #if !spotifyAccessToken }
-                <p>Welcome.</p>
-                <a href={spotifyUrl}>Click to log in to spotify</a>
-            { :else }
-                {#if isPlaying}
-                    <div class="controls">
-                        <div class="main-controls">
-                            {#if paused}
-                                <svg class="feather" on:click={resume}>
-                                    <use xlink:href="feather-sprite.svg#play"/>
-                                </svg>
-                            {:else }
-                                <svg class="feather" on:click={pause}>
-                                    <use xlink:href="feather-sprite.svg#pause"/>
-                                </svg>
-                            {/if}
-                            <svg class="feather" on:click={next}>
-                                    <use xlink:href="feather-sprite.svg#skip-forward"/>
-                            </svg>
-                        </div>
-                        <p>{songInfo}</p>
-                    </div>
-                {/if}
-            { /if }
+    { #if !spotifyAccessToken }
+        <h1>Welcome</h1>
+        <a href={spotifyUrl}>Log in Spotify to begin.</a>
+    { :else }
+        {#if isPlaying}
+            <div class="controls">
+                <div class="main-controls">
+                    {#if paused}
+                        <Icon onClick={resume} name='play'/>
+                    {:else }
+                        <Icon onClick={pause} name='pause'/>
+                    {/if}
+                        <Icon onClick={next} name='skip-forward'/>
+                        <Icon onClick={next} name='reload'/>
+                </div>
+                <p>{songInfo}</p>
+            </div>
+        {/if}
+    { /if }
 </main>
 
 <style>
@@ -159,7 +167,6 @@
     }
     .main-controls {
         display:flex;
-        cursor: pointer;
     }
     .controls {
         display: flex;
@@ -167,7 +174,6 @@
         align-items: center;
         color: black;
     }
-
 </style>
 
 <svelte:head>
