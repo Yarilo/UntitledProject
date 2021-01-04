@@ -15,8 +15,6 @@
 	const onImageLoad = () => isImageLoaded = true;
 	const onImageLoading = (promise) => loadingPromise = promise;
 
-	const onPlayerError = (error) => playerError = error;
-	const onImageError = (error) => imageError = error;
 
 	async function updateQuery (event = {target:{}}) {
 		clearTimeout(timeout);
@@ -46,9 +44,9 @@
 	
 	{/if}
 	<div class={isPlayerInitialized ? 'music-player': 'music-player not-logged'}>
-		<MusicPlayer {query} onInitialization={onPlayerInit} onError={onPlayerError} />
+		<MusicPlayer {query} onInitialization={onPlayerInit} />
 	</div>
-	<Background {query} onLoading={onImageLoading} onLoad={onImageLoad} onError={onImageError} />
+	<Background {query} onLoading={onImageLoading} onLoad={onImageLoad}  />
 </main>
 
 <style>

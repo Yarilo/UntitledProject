@@ -6,7 +6,6 @@
 
     export let query;
     export let onInitialization; 
-    export let onError;
 
     const { SPOTIFY_CLIENT_ID } = process.env;
     const BASE_SPOTIFY_URL='https://api.spotify.com'
@@ -33,7 +32,6 @@
       
     function onPlayerError ({message}) {
         console.error(message)
-        onError(message);
     } 
 
     const ENDPOINTS = {
