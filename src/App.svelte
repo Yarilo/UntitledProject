@@ -9,7 +9,7 @@
 	let query;
 	let isPlayerLoaded = false;
 	let isImageLoaded = false;
-	let loadingImagePromise;
+	let loadingPromise;
 
 	const onPlayerLoad = () => isPlayerLoaded = true;
 	const onImageLoad = () => isImageLoaded =true;
@@ -25,8 +25,10 @@
 
 	$: {
 		if (query) {
-			loadingImagePromise = new Promise((resolve, reject) => {
-				if (isImageLoaded) return resolve();
+			loadingPromise = new Promise((resolve, reject) => {
+				if (isImageLoaded && isPlayerLoaded) {
+					return resolve();
+				}
 			});
 		}	
 	}
@@ -41,7 +43,7 @@
 			<h1>Type something</h1>
 			{/if }
 			<input on:input={updateQuery}>
-			{#await loadingImagePromise}
+			{#await loadingPromise}
                 <p>Fetching...</p>
             {:catch error}
                 <p style="color: red">{error.message}</p>
