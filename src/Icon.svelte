@@ -9,6 +9,7 @@
 </svg>
 
 <style>
+
      .feather {    
         color: white;
         cursor: pointer; /* All icons are clickable for now */
