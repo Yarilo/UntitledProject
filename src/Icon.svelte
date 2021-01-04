@@ -1,7 +1,7 @@
 <script>
-export let name;
-export let onClick;
-export let size;
+    export let name;
+    export let onClick;
+    export let size;
 </script>
 
 <svg class={'feather'} class:small={size === 'small'} on:click={onClick}>
