@@ -5,12 +5,13 @@
        
        export let query;
        export let onLoad;
+       export let onError;
 
 	let photographer;
 	let photographerLink;
 	let photoLink;
        let request;
-       
+
        const { UNSPLASH_ACCESS_KEY } = process.env;
 	const BASE_UNSPLASH_URL =  'https://api.unsplash.com/';
 
@@ -29,14 +30,19 @@
 
        
        async function loadPhoto (query)  {
-		const response = await request.get(`/photos/random/?query=${query}&orientation=landscape&featured=true`);
-		const {urls, user, links} = response.data;
-		const src = `${urls.raw}?auto=format&q=10` //  https://docs.imgix.com/apis/rendering/format/q
-		photographer = user.name;
-		photographerLink = user.links.html;
-		photoLink = links.html;
-              await loadImage(src)
-              onLoad();
+              try {
+                     const response = await request.get(`/photos/random/?query=${query}&orientation=landscape&featured=true`);
+                     const {urls, user, links} = response.data;
+                     const src = `${urls.raw}?auto=format&q=10` //  https://docs.imgix.com/apis/rendering/format/q
+                     photographer = user.name;
+                     photographerLink = user.links.html;
+                     photoLink = links.html;
+                     await loadImage(src)
+                     onLoad();
+              } catch(error) {
+                     onError(error);
+              }
+		
        }
        
        function loadImage(imageUrl) {

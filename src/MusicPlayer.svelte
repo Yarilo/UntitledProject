@@ -6,6 +6,7 @@
 
     export let query;
     export let onLoad; 
+    export let onError;
 
     const { SPOTIFY_CLIENT_ID } = process.env;
     const BASE_SPOTIFY_URL='https://api.spotify.com'
@@ -30,6 +31,11 @@
         if (query) next();
     }
       
+    function onPlayerError ({message}) {
+        console.error(message)
+        onError(message);
+    } 
+
     const ENDPOINTS = {
         PLAY: () => `${BASE_SPOTIFY_URL}/v1/me/player/play?device_id=${player._options.id}`,
         SEARCH: (query) => `${BASE_SPOTIFY_URL}/v1/search?q=${encodeURIComponent(query)}&type=track&limit=${SEARCH_LIMIT}`
@@ -43,10 +49,10 @@
         });
 
         // Error handling
-        player.addListener('initialization_error', ({ message }) => { console.error(message); });
-        player.addListener('authentication_error', ({ message }) => { console.error(message); });
-        player.addListener('account_error', ({ message }) => { console.error(message); });
-        player.addListener('playback_error', ({ message }) => { console.error(message); });
+        player.addListener('initialization_error', (error) => { onPlayerError(error) });
+        player.addListener('authentication_error', (error) => { onPlayerError(error) });
+        player.addListener('account_error', (error) => { onPlayerError(error) });
+        player.addListener('playback_error', (error) => { onPlayerError(error) });
 
         // Playback status updates
         player.addListener('player_state_changed', state => {
