@@ -5,7 +5,7 @@
     import Icon from './Icon.svelte';
 
     export let query;
-    export let onLoad; 
+    export let onInitialization; 
     export let onError;
 
     const { SPOTIFY_CLIENT_ID } = process.env;
@@ -67,7 +67,7 @@
         player.addListener('ready', ({ device_id }) => {
             console.log('Ready with Device ID', device_id);
             player.setVolume(VOLUME);
-            onLoad();
+            onInitialization();
         });
 
         // Not Ready

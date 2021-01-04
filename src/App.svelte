@@ -7,15 +7,15 @@
 	let timeout;
 
 	let query;
-	let isPlayerLoaded = false;
+	let isPlayerInitialized = false;
 	let isImageLoaded = false;
 	let playerError = '';
 	let imageError = '';
 
 	let loadingPromise;
 
-	const onPlayerLoad = () => isPlayerLoaded = true;
-	const onImageLoad = () => isImageLoaded =true;
+	const onPlayerInit = () => isPlayerInitialized = true;
+	const onImageLoad = () => isImageLoaded = true;
 
 	const onPlayerError = (error) => playerError = error;
 	const onImageError = (error) => imageError = error;
@@ -29,9 +29,9 @@
 		}, DELAY_TIME_MS)
 	}
 
-	function getLoadingPromise (isImageLoaded, isPlayerLoaded, playerError, imageError) {
+	function getLoadingPromise (isImageLoaded, playerError, imageError) {
 		return new Promise((resolve, reject)=> {
-			if (isImageLoaded && isPlayerLoaded) {
+			if (isImageLoaded) {
 					return resolve();
 				}
 			if (playerError) return reject(playerError);
@@ -41,7 +41,7 @@
 
 	$: {
 		if (query) {
-			loadingPromise = getLoadingPromise(isImageLoaded, isPlayerLoaded, playerError, imageError)
+			loadingPromise = getLoadingPromise(isImageLoaded, playerError, imageError)
 		}	
 	}
 
@@ -49,7 +49,7 @@
 </script>
 
 <main class={isImageLoaded ? 'white-text': ''}>
-	{#if isPlayerLoaded} 
+	{#if isPlayerInitialized} 
 		<div id='keyword'>
 			{#if !isImageLoaded} 
 			<h1>Type something</h1>
@@ -63,8 +63,8 @@
 		</div>
 	
 	{/if}
-	<div class={isPlayerLoaded ? 'music-player': 'music-player not-logged'}>
-		<MusicPlayer {query} onLoad={onPlayerLoad} onError={onPlayerError} />
+	<div class={isPlayerInitialized ? 'music-player': 'music-player not-logged'}>
+		<MusicPlayer {query} onInitialization={onPlayerInit} onError={onPlayerError} />
 	</div>
 	<Background {query} onLoad={onImageLoad} onError={onImageError} />
 </main>

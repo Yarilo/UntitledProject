@@ -6,6 +6,6 @@
 
 * BONUS
  ** Find a way to ask for a different picture of the same word(s) without having to retype -> DONE 
- ** Keywords to control app: play/pause with space bar, next song, load another image...
+ ** Keywords to control app: play/pause with space bar, next song, load another image... -> DONE (space only)
  ** Hide everything if we stop interacting/typing, and only showing it on hover/movering mouse
  ** On clicking the name of the song in spotify, go to it
