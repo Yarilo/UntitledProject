@@ -5,12 +5,11 @@
 	const DELAY_TIME_MS = 600;
 	
 	let timeout;
-	let fetchPromise;
 
 	let query;
 	let isPlayerLoaded = false;
 	let isImageLoaded = false;
-	
+	let loadingImagePromise;
 
 	const onPlayerLoad = () => isPlayerLoaded = true;
 	const onImageLoad = () => isImageLoaded =true;
@@ -24,6 +23,14 @@
 		}, DELAY_TIME_MS)
 	}
 
+	$: {
+		if (query) {
+			loadingImagePromise = new Promise((resolve, reject) => {
+				if (isImageLoaded) return resolve();
+			});
+		}	
+	}
+
 
 </script>
 
@@ -34,13 +41,18 @@
 			<h1>Type something</h1>
 			{/if }
 			<input on:input={updateQuery}>
+			{#await loadingImagePromise}
+                <p>Fetching...</p>
+            {:catch error}
+                <p style="color: red">{error.message}</p>
+            {/await}
 		</div>
 	
 	{/if}
 	<div class={isPlayerLoaded ? 'music-player': 'music-player not-logged'}>
 		<MusicPlayer {query} onLoad={onPlayerLoad} />
 	</div>
-	<Background {fetchPromise} {query} onLoad={onImageLoad} />
+	<Background {query} onLoad={onImageLoad} />
 </main>
 
 <style>
